@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import se.distansakademin.models.Project;
 import se.distansakademin.repositories.ProjectRepository;
 
 import java.io.IOException;
@@ -18,6 +19,16 @@ public class ProjectsServlet extends HttpServlet {
 
     public ProjectsServlet() {
         projectRepository = new ProjectRepository();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+
+        var project = new Project(title, description);
+        projectRepository.saveProject(project);
+
+        response.sendRedirect(request.getContextPath() + "/projects");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

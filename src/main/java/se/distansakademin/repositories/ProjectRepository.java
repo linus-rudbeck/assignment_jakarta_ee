@@ -21,4 +21,10 @@ public class ProjectRepository {
         var projects = query.getResultList();
         return projects;
     }
+
+    public void saveProject(Project project) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(project);
+        entityManager.getTransaction().commit();
+    }
 }
